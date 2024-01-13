@@ -4,14 +4,13 @@ import { error } from '@sveltejs/kit';
 
 export async function load({ params, platform }) {
   let result = await platform.env.DB.prepare(
-    `SELECT * FROM names WHERE name = "${params.name}"`
+    `SELECT * FROM names`
   ).run();
 
 	if (!result) throw error(404);
-	if (result.results.length <= 0) throw error(404);
-  const name = result.results[0];
+  const names = result.results;
 
 	return {
-		name
+		names
 	};
 }
